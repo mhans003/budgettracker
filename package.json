@@ -8,6 +8,7 @@
     "prestart": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "heroku-postbuild": "webpack -p",
     "lite-server": "lite-server"
   },
   "repository": {
