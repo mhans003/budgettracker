@@ -7,8 +7,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "dev": "webpack serve",
     "start": "node server.js",
-    "build": "webpack --prod"
+    "build": "webpack --mode production",
+    "heroku-postbuild": "node start build"
   },
   "repository": {
     "type": "git",
