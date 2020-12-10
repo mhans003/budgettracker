@@ -10,7 +10,7 @@
     "dev": "webpack serve",
     "start": "node server.js",
     "build": "webpack --mode production",
-    "heroku-postbuild": "node start build"
+    "heroku-postbuild": "node build"
   },
   "repository": {
     "type": "git",
