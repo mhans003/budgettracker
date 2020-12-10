@@ -1,11 +1,14 @@
 {
   "name": "budget-app",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.x"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "webpack -p"
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
