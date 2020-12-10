@@ -1,10 +1,10 @@
 const FILES_TO_CACHE = [
     "/",
-    "./index.html",
-    "./assets/stylesheets/style.css",
-    "./dist/index.bundle.js",
-    "./dist/auto/assets/icons/icon_192x192.png",
-    "./dist/auto/assets/icons/icon_512x512.png"
+    "/index.html",
+    "/assets/stylesheets/style.css",
+    "/dist/index.bundle.js",
+    "/assets/icons/icon_192x192.png",
+    "/assets/icons/icon_512x512.png"
   ];
   
   const STATIC_CACHE = "static-cache-v1";
