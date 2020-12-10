@@ -1,7 +1,12 @@
 {
   "icons": [
     {
-      "src": "auto/assets/icons/icon_512x512.273935f8ebdc8218f2ce26daa11d6844.png",
+      "src": "/assets/icons/icon_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/icon_512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
