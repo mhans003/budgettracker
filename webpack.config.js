@@ -10,6 +10,7 @@ const config = {
     mode: "development",
     plugins: [
       new WebpackPwaManifest({
+        fingerprints: false,
         name: "Budget Tracker",
         short_name: "Budget Tracker",
         description: "An application for keeping track of budget transactions.",
@@ -19,8 +20,8 @@ const config = {
         start_url: "/",
         icons: [
           {
-            src: path.resolve("public/assets/icons/icon-192x192.png"),
-            sizes: [512],
+            src: path.resolve("public/assets/icons/icon-512x512.png"),
+            sizes: [192, 512],
             destination: path.join("assets", "icons")
           }
         ]
