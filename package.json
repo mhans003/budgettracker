@@ -9,8 +9,7 @@
   "scripts": {
     "dev": "webpack serve",
     "start": "node server.js",
-    "build": "webpack --mode production",
-    "heroku-postbuild": "node build"
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
