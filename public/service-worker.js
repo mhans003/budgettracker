@@ -3,8 +3,8 @@ const FILES_TO_CACHE = [
     "/index.html",
     "/assets/stylesheets/style.css",
     "/dist/index.bundle.js",
-    "/assets/icons/icon-192x192.png",
-    "/assets/icons/icon-512x512.png"
+    "/assets/icons/icon_192x192.png",
+    "/assets/icons/icon_512x512.png"
   ];
   
   const STATIC_CACHE = "static-cache-v1";
