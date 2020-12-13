@@ -17,21 +17,21 @@ router.post("/api/transaction", ({body}, res) => {
 
 //Post multiple transactions to the database.
 router.post("/api/transaction/bulk", ({body}, res) => {
-  Transaction.insertMany(body)
-    .then(dbTransaction => {
-      //Send back the json result.
-      res.json(dbTransaction);
-    })
-    .catch(err => {
-      //Otherwise, send an error.
-      res.status(404).json(err);
-    });
+    Transaction.insertMany(body)
+      .then(dbTransaction => {
+        //Send back the json result.
+        res.json(dbTransaction);
+      })
+      .catch(err => {
+        //Otherwise, send an error.
+        res.status(404).json(err);
+      });
 });
 
 //Get the transactions from the database. 
 router.get("/api/transaction", (req, res) => {
-  //Sorted by order of date, get all transactions
-  Transaction.find({}).sort({date: -1})
+  //Sorted by order of date, get all transactions (exclude ID and __v fields)
+  Transaction.find({}, {_id: 0, __v: 0}).sort({date: -1})
     .then(dbTransaction => {
       //Using the results, send back json data.
       res.json(dbTransaction);

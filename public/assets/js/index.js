@@ -1,18 +1,39 @@
 let transactions = [];
 let myChart;
 
-//Get all transactions from the database.
+//At the start of the application, attempt to connect to MongoDB Atlas and retrieve data.
 fetch("/api/transaction")
   .then(response => {
     return response.json();
   })
   .then(data => {
-    //Save the retrieved data on global transactions variable.
-    transactions = data;
+    //If there is anything in IndexedDB, save those items to MongoDB before starting application.
+    if(verifyIndexedDB()) {
+      useIndexedDB("budgettracker_mh", "transactions", "get")
+        .then(results => {
+          //For each item in IndexedDB, save it to MongoDB.
+          console.log(`results found in indexeddb: ${results}`);
+          results.forEach(result => {
+            console.log(`Found result: ${result.name}.`);
+            sendToDatabase(result);
+          });
 
-    populateTotal();
-    populateTable();
-    populateChart();
+          //Now clear IndexedDB.
+          clearStore("budgettracker_mh", "transactions");
+
+          //Save DB data on global variable.
+          transactions = data;
+
+          console.log(`Data retrieved from MongoDB at start: ${transactions}`);
+
+          populateTotal();
+          populateTable();
+          populateChart();
+        });
+    }
+  })
+  .catch(error => {
+    console.log("Database not connected. Using offline mode.");
   });
 
 function populateTotal() {
@@ -121,16 +142,20 @@ function sendTransaction(isAdding) {
   populateTable();
   populateTotal();
   
-  //Send the data to server to be stored.
+  //Send the data to server to be stored, IF online.
+  sendToDatabase(transaction, nameEl, amountEl);
+}
+
+function sendToDatabase(data, nameEl, amountEl) {
   fetch("/api/transaction", {
     method: "POST",
-    body: JSON.stringify(transaction),
+    body: JSON.stringify(data),
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json"
     }
   })
-  .then(response => {    
+  .then(response => {  
     return response.json();
   })
   .then(data => {
@@ -139,24 +164,29 @@ function sendTransaction(isAdding) {
       errorEl.textContent = "Missing Information";
     }
     else {
-      //Clear the form.
-      nameEl.value = "";
-      amountEl.value = "";
+      //Clear the form, if this is happening after clicking a button.
+      if(nameEl) {
+        nameEl.value = "";
+      }
+
+      if(amountEl) {
+        amountEl.value = "";
+      }
     }
   })
   .catch(err => {
-    //If the fetch failed, save in IndexedDB.
-    saveRecord(transaction);
+    //Send the data to indexedDB if there is no internet connection.
+    useIndexedDB("budgettracker_mh", "transactions", "put", data);
 
-    //Clear the form.
-    nameEl.value = "";
-    amountEl.value = "";
+    //Clear the form, if this is happening after clicking a button.
+    if(nameEl) {
+      nameEl.value = "";
+    }
+
+    if(amountEl) {
+      amountEl.value = "";
+    }
   });
-}
-
-//Save the transaction in IndexedDB if not connected.
-function saveRecord(transaction) {
-  
 }
 
 //EVENT LISTENERS
@@ -196,7 +226,7 @@ function useIndexedDB(databaseName, storeName, method, object) {
     request.onupgradeneeded = function(e) {
       const db = request.result;
       //Create the name of the transactions store.
-      db.createObjectStore(storeName, { keyPath: "_id" });
+      db.createObjectStore(storeName, { keyPath: "key", autoIncrement: true});
     };
 
     request.onerror = function(e) {
@@ -209,6 +239,7 @@ function useIndexedDB(databaseName, storeName, method, object) {
     request.onsuccess = function(e) {
       //Identify the DB.
       db = request.result;
+
       //Create a transaction with the desired store.
       tx = db.transaction(storeName, "readwrite");
       store = tx.objectStore(storeName);
@@ -220,6 +251,7 @@ function useIndexedDB(databaseName, storeName, method, object) {
       //If the method passed in is 'put', store the passed in object.
       if (method === "put") {
         store.put(object);
+        console.log("record inserted into IndexedDB");
       } else if (method === "get") {
         //If the method is 'get', grab all the items stored in indexedDB.
         const all = store.getAll();
@@ -239,4 +271,25 @@ function useIndexedDB(databaseName, storeName, method, object) {
   });
 }
 
+function clearStore(databaseName, storeName) {
+  const request = window.indexedDB.open(databaseName, 1);
 
+  //Request a delete on the object store once the database is open.
+  request.onsuccess = function(event) {
+    db = request.result;
+
+    let deleteTransaction = db.transaction(storeName, "readwrite");
+
+    deleteTransaction.onerror = function(event) {
+      console.log("Something went wrong opening a delte transaction.");
+    }
+
+    let objectStore = deleteTransaction.objectStore(storeName);
+
+    let objectStoreRequest = objectStore.clear();
+
+    objectStoreRequest.onsuccess = function(event) {
+      console.log("Delete Successful");
+    }
+  }
+}
