@@ -39,12 +39,12 @@ fetch("/api/transaction")
 function populateTotal() {
   //Reduce the transaction amounts to a single total.
   let total = transactions.reduce((total, t) => {
-    return total + t.value;
-  }, 0).toFixed(2);
+    return total + parseFloat(t.value);
+  }, 0);
 
   //Output the total for the user.
   let totalEl = document.querySelector("#total");
-  totalEl.textContent = total;
+  totalEl.textContent = parseFloat(total).toFixed(2);
 }
 
 function populateTable() {
@@ -58,7 +58,7 @@ function populateTable() {
     let tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${transaction.name}</td>
-      <td>${transaction.value}</td>
+      <td>${parseFloat(transaction.value).toFixed(2)}</td>
     `;
 
     //Insert this row into the new table.
@@ -79,8 +79,8 @@ function populateChart() {
 
   //Create the incremental values for the chart.
   let data = reversed.map(t => {
-    sum += t.value;
-    return sum.toFixed(2);
+    sum += parseFloat(t.value);
+    return sum;
   });
 
   //If there is already a chart, get rid of it.

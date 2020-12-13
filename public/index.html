@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#317EFB">
   <link rel="shortcut icon" href="./assets/icons/icon_512x512.png" type="image/x-icon">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="assets/stylesheets/styles.css">
   <link rel="manifest" href="./manifest.json">
   <title>Budget Tracker</title>
@@ -18,10 +19,12 @@
     </div>
 
     <div class="form">
-      <input type="text" id="t-name" placeholder="Item" />
-      <input type="number" min="0" id="t-amount" placeholder="$" />
-      <button id="add-btn"><i class="fa fa-plus buttons"></i></button>
-      <button id="sub-btn"><i class="fa fa-minus"></i></button>
+      <div class="form-group">
+        <input class="mt-2" type="text" id="t-name" placeholder="Item" aria-label="Input Name of Transaction"/>
+        <input class="mt-2" type="number" min="0" id="t-amount" placeholder="$" aria-label="Input Amount of Transaction"/>
+      </div>
+      <button class="btn btn-success" id="add-btn"><i class="fa fa-plus buttons"></i></button>
+      <button class="btn btn-danger" id="sub-btn"><i class="fa fa-minus"></i></button>
       <p class="error"></p>
     </div>
 
