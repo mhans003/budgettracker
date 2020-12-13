@@ -39,8 +39,8 @@ fetch("/api/transaction")
 function populateTotal() {
   //Reduce the transaction amounts to a single total.
   let total = transactions.reduce((total, t) => {
-    return total + parseInt(t.value);
-  }, 0);
+    return total + t.value;
+  }, 0).toFixed(2);
 
   //Output the total for the user.
   let totalEl = document.querySelector("#total");
@@ -79,8 +79,8 @@ function populateChart() {
 
   //Create the incremental values for the chart.
   let data = reversed.map(t => {
-    sum += parseInt(t.value);
-    return sum;
+    sum += t.value;
+    return sum.toFixed(2);
   });
 
   //If there is already a chart, get rid of it.
@@ -125,7 +125,7 @@ function sendTransaction(isAdding) {
   //Create the record by packaging the data up into a transaction object.
   let transaction = {
     name: nameEl.value,
-    value: amountEl.value,
+    value: parseFloat(amountEl.value).toFixed(2),
     date: new Date().toISOString()
   };
 
