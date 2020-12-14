@@ -5,34 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#317EFB">
+  <!--Google Fonts-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="./assets/icons/icon_512x512.png" type="image/x-icon">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+  <script src="https://kit.fontawesome.com/f10d4c591f.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="assets/stylesheets/styles.css">
   <link rel="manifest" href="./manifest.json">
-  <title>Budget Tracker</title>
+  <title>Expense Tracker</title>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="total">
-      <div class="total">Budget: $<span id="total">0</span></div>
-    </div>
+  <div class="jumbotron total text-center">
+    <div class="h2" id="heading"><span id="e">E</span>xpenses</div>
+    <hr>
+    <div class="h1 total mt-5"><span id="total">0</span></div>
+  </div>
 
-    <div class="form">
+  <div class="wrapper">
+
+    <div class="form container">
       <div class="form-group">
-        <input class="mt-2" type="text" id="t-name" placeholder="Item" aria-label="Input Name of Transaction"/>
-        <input class="mt-2" type="number" min="0" id="t-amount" placeholder="$" aria-label="Input Amount of Transaction"/>
+        <input class="mt-2 form-control form-control-lg" type="text" id="t-name" placeholder="Item" aria-label="Input Name of Transaction"/>
+        <input class="mt-2 form-control form-control-lg" type="number" min="0" id="t-amount" placeholder="$" aria-label="Input Amount of Transaction"/>
       </div>
-      <button class="btn btn-success" id="add-btn"><i class="fa fa-plus buttons"></i></button>
-      <button class="btn btn-danger" id="sub-btn"><i class="fa fa-minus"></i></button>
+      <button class="btn btn-lg btn-success mt-2" id="add-btn">Spend <i class="fad fa-money-bill-wave"></i></button>
+      <button class="btn btn-lg btn-secondary mt-2" id="sub-btn">Receive <i class="fas fa-undo-alt"></i></button>
       <p class="error"></p>
     </div>
 
     <div class="transactions">
-      <table>
+      <table class="table table-striped">
         <thead>
-          <th>Name</th>
-          <th>Amount($)</th>
+          <th scope="col">Item</th>
+          <th scope="col">Amount ($)</th>
         </thead>
         <tbody id="tbody">
           
@@ -41,6 +48,7 @@
     </div>
     
     <canvas id="myChart"></canvas>
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

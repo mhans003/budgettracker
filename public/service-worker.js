@@ -5,7 +5,9 @@ const FILES_TO_CACHE = [
     "/assets/stylesheets/bootstrap.min.css",
     "/assets/js/index.js",
     "/assets/icons/icon_512x512.png",
-    "/manifest.json"
+    "/manifest.json",
+    "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap",
+    "https://kit.fontawesome.com/f10d4c591f.js"
   ];
   
   const STATIC_CACHE = "static-cache-v1";

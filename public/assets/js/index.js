@@ -44,7 +44,7 @@ function populateTotal() {
 
   //Output the total for the user.
   let totalEl = document.querySelector("#total");
-  totalEl.textContent = parseFloat(total).toFixed(2);
+  totalEl.textContent = total > 0 ? `$${parseFloat(total).toFixed(2)}` : `+ $${parseFloat(total * -1).toFixed(2)}`;
 }
 
 function populateTable() {
@@ -97,9 +97,9 @@ function populateChart() {
       data: {
         labels,
         datasets: [{
-            label: "Total Over Time",
+            label: "Expenses Over Time",
             fill: true,
-            backgroundColor: "#6666ff",
+            backgroundColor: "rgba(123, 237, 159, 1.0)",
             data
         }]
     }
